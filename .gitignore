@@ -1,0 +1,13 @@
+.env
+
+node_modules
+package-lock.json
+*.log
+*.gz
+.nyc_output
+coverage
+benchmarks/graphs
+build
+npm-debug.log
+.nyc
+.DS_Store
