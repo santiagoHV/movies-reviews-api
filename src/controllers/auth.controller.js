@@ -2,20 +2,25 @@ const jwt = require('jsonwebtoken')
 const Users = require('../db/models/Users')
 
 const signIn = async(req, res, next) => {
-    let { email, password } = req.body
+    try {
+        let { email, password } = req.body
 
-    const userFound = await Users.findOne({ where: { email } })
-    if (!userFound) return res.status(400).json({ message: 'User not found' })
+        const userFound = await Users.findOne({ where: { email } })
+        if (!userFound) return res.status(400).json({ message: 'User not found' })
 
-    const passwordMatch = await userFound.comparePassword(password)
-    if (!passwordMatch) return res.status(401).json({ message: 'Invalid password' })
+        const passwordMatch = await userFound.comparePassword(password)
+        if (!passwordMatch) return res.status(401).json({ message: 'Invalid password' })
 
-    const token = jwt.sign({ id: user.id },
-        process.env.JWT_SECRET, {
-            expiresIn: 86400 //24 hours
-        })
+        const token = jwt.sign({ id: userFound.id },
+            process.env.JWT_SECRET, {
+                expiresIn: 86400 //24 hours
+            })
 
-    res.status(201).json({ email, token })
+        res.status(201).json({ email, token })
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
 }
 
 const signUp = async(req, res, next) => {

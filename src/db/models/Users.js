@@ -8,6 +8,11 @@ class Users extends Model {
     async comparePassword(password) {
         return await bcrypt.compare(password, this.password);
     }
+
+    async becomeAdmin() {
+        this.role = 'admin'
+        await this.save()
+    }
 }
 
 Users.init({

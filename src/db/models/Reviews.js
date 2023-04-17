@@ -9,11 +9,21 @@ const Reviews = sequelize.define('reviews', {
         primaryKey: true,
         autoIncrement: true,
     },
-    name: Sequelize.STRING,
-    director: Sequelize.STRING,
+    comment: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
+    rating: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+    },
 });
 
-Reviews.belongsTo(Users)
-Reviews.belongsTo(Movies)
+Reviews.belongsTo(Users, {
+    foreignKey: 'userId',
+})
+Reviews.belongsTo(Movies, {
+    foreignKey: 'movieId',
+})
 
 module.exports = Reviews

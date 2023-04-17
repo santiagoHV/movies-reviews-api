@@ -8,10 +8,13 @@ const Movies = sequelize.define('movies', {
         primaryKey: true,
         autoIncrement: true,
     },
-    name: Sequelize.STRING,
+    title: Sequelize.STRING,
     director: Sequelize.STRING,
 });
 
-Movies.belongsTo(Users, { as: 'creator' })
+Movies.belongsTo(Users, {
+    as: 'creator',
+    foreignKey: 'creatorId',
+})
 
 module.exports = Movies
