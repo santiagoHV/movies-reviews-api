@@ -17,10 +17,49 @@ const createMovie = async(req, res, next) => {
     }
 }
 
+const getUnpublishedMovies = async(req, res, next) => {
+    try {
+        const movies = await Movies.findAll({ where: { published: false } })
+        res.status(200).json(movies)
+    } catch (error) {
+        next(error)
+    }
+}
+
+const publishMovie = async(req, res, next) => {
+    try {
+        const { id } = req.params
+        const movie = await Movies.findByPk(id)
+        if (!movie) {
+            res.status(404).json({ message: 'Movie not found' })
+        } else {
+            await movie.update({ published: true })
+            res.status(200).json(movie)
+        }
+    } catch (err) {
+        next(err);
+    }
+}
+
+const unpublishMovie = async(req, res, next) => {
+    try {
+        const { id } = req.params
+        const movie = await Movies.findByPk(id)
+        if (!movie) {
+            res.status(404).json({ message: 'Movie not found' })
+        } else {
+            await movie.update({ published: false })
+            res.status(200).json(movie)
+        }
+    } catch (err) {
+        next(err);
+    }
+}
+
 //TODO: add calificacion promedio, paginacion y filtrado
 const getAllMovies = async(req, res, next) => {
     try {
-        const movies = await Movies.findAll()
+        const movies = await Movies.findAll({ where: { published: true } })
         res.status(200).json(movies)
     } catch (error) {
         next(error)

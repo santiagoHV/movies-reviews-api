@@ -38,10 +38,24 @@ const createAdmin = async(req, res) => {
     }
 }
 
+//revisar
+const searchUser = async(req, res) => {
+    const { name } = req.query
+    const users = await Users.findAll({
+        where: {
+            name: {
+                [Op.like]: `%${name}%`
+            }
+        }
+    })
+
+}
+
 //buscar usuarios
 
 module.exports = {
     getAllUsers,
     getUserById,
-    createAdmin
+    createAdmin,
+    searchUser
 }

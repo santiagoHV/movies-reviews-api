@@ -1,6 +1,8 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = require('../connection');
 const bcrypt = require('bcryptjs');
+const Reviews = require('./Reviews');
+const Movies = require('./Movies');
 
 const ROLES = ['user', 'admin']
 
@@ -48,5 +50,8 @@ Users.beforeCreate(async(user) => {
 Users.comparePassword = () => {
 
 }
+
+Users.hasMany(Reviews, { as: 'reviews' })
+    // Users.hasMany(sequelize.models.Movies, { as: 'movies' })
 
 module.exports = Users

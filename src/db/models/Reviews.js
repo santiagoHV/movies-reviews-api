@@ -1,9 +1,15 @@
-const Sequelize = require('sequelize');
+const { Sequelize, Model, DataTypes } = require('sequelize');
 const sequelize = require('../connection');
 const Users = require('./Users');
 const Movies = require('./Movies');
 
-const Reviews = sequelize.define('reviews', {
+class Reviews extends Model {
+
+
+    async calculateRating() {}
+}
+
+Reviews.init({
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -17,13 +23,19 @@ const Reviews = sequelize.define('reviews', {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
+}, {
+    sequelize,
+    modelName: 'Reviews'
 });
 
-Reviews.belongsTo(Users, {
-    foreignKey: 'userId',
-})
-Reviews.belongsTo(Movies, {
-    foreignKey: 'movieId',
-})
+// Reviews.belongsTo(Users, {
+//     foreignKey: 'userId',
+//     as: 'user',
+// })
+
+// Reviews.belongsTo(Movies, {
+//     foreignKey: 'movieId',
+//     as: 'movie',
+// })
 
 module.exports = Reviews
