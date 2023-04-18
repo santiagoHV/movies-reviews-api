@@ -40,4 +40,4 @@ async function init() {
     app.listen(port, () => console.log(`Listening on port ${port}`))
 }
 
-module.exports = init
+module.exports = { app, init }

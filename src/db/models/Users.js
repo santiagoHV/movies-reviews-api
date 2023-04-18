@@ -2,11 +2,10 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = require('../connection');
 const bcrypt = require('bcryptjs');
 const Reviews = require('./Reviews');
-const Movies = require('./Movies');
-
 const ROLES = ['user', 'admin']
 
 class Users extends Model {
+
     async comparePassword(password) {
         return await bcrypt.compare(password, this.password);
     }
@@ -39,7 +38,8 @@ Users.init({
     role: Sequelize.ENUM(ROLES)
 }, {
     sequelize,
-    modelName: 'Users'
+    modelName: 'Users',
+    tableName: 'users',
 })
 
 Users.beforeCreate(async(user) => {
@@ -47,11 +47,8 @@ Users.beforeCreate(async(user) => {
     user.password = hashedPassword;
 });
 
-Users.comparePassword = () => {
 
-}
-
-Users.hasMany(Reviews, { as: 'reviews' })
-    // Users.hasMany(sequelize.models.Movies, { as: 'movies' })
+Users.hasMany(Reviews, { foreignKey: 'userId', })
+Reviews.belongsTo(Users, { foreignKey: 'userId', })
 
 module.exports = Users

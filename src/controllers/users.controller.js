@@ -13,6 +13,7 @@ const getUserById = async(req, res) => {
     try {
         const { id } = req.params
         const user = await Users.findByPk(id)
+        console.log(user.reviews)
         if (!user) {
             res.status(404).json({ message: 'User not found' })
         } else {
@@ -51,7 +52,6 @@ const searchUser = async(req, res) => {
 
 }
 
-//buscar usuarios
 
 module.exports = {
     getAllUsers,

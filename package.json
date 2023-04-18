@@ -1,26 +1,30 @@
 {
-  "name": "byte4bit",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "helmet": "^6.1.5",
-    "jsonwebtoken": "^9.0.0",
-    "morgan": "^1.10.0",
-    "pg": "^8.10.0",
-    "pg-hstore": "^2.3.4",
-    "sequelize": "^6.31.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
-  }
+    "name": "byte4bit",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "cross-env NODE_ENV=test jest --setupFiles dotenv/config --silent",
+        "dev": "cross-env NODE_ENV=development nodemon index.js",
+        "start": "cross-env NODE_ENV=production node index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "helmet": "^6.1.5",
+        "jsonwebtoken": "^9.0.0",
+        "morgan": "^1.10.0",
+        "pg": "^8.10.0",
+        "pg-hstore": "^2.3.4",
+        "sequelize": "^6.31.0"
+    },
+    "devDependencies": {
+        "jest": "^29.5.0",
+        "nodemon": "^2.0.22",
+        "supertest": "^6.3.3"
+    }
 }

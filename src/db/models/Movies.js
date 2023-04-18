@@ -4,19 +4,24 @@ const Users = require('./Users');
 const Reviews = require('./Reviews');
 
 class Movies extends Model {
-    async calculateRating() {
 
+    async calculateRating() {
+        const reviews = await this.getReviews()
+        const rating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
+        return rating || 0
     }
 
     async getReviews() {
         const reviews = await Reviews.findAll({ where: { movieId: this.id } })
         return reviews
     }
+
+
 }
 
 Movies.init({
     id: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
@@ -25,18 +30,30 @@ Movies.init({
         defaultValue: false,
         allowNull: false,
     },
-    title: Sequelize.STRING,
-    director: Sequelize.STRING,
+    title: DataTypes.STRING,
+    director: DataTypes.STRING,
 }, {
     sequelize,
-    modelName: 'Movies'
+    modelName: 'Movies',
+    tableName: 'movies',
 });
 
-Movies.belongsTo(Users, {
-    as: 'creator',
+
+Users.hasMany(Movies, {
     foreignKey: 'creatorId',
 })
 
-Movies.hasMany(Reviews, { as: 'reviews' })
+Movies.belongsTo(Users, {
+    foreignKey: 'creatorId',
+    as: 'Creator'
+})
+
+Movies.hasMany(Reviews, {
+    foreignKey: 'movieId',
+})
+
+Reviews.belongsTo(Movies, {
+    foreignKey: 'movieId',
+})
 
 module.exports = Movies

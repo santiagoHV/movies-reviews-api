@@ -23,10 +23,10 @@ const signIn = async(req, res, next) => {
     }
 }
 
+//TODO: just admin can create admin
 const signUp = async(req, res, next) => {
     try {
         let { email, name, password, role } = req.body
-            //TODO: just admin can create admin
         if (!role) {
             role = 'user'
         }

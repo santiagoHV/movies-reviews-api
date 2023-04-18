@@ -17,6 +17,8 @@ const verifyToken = async(req, res, next) => {
         }
 
         req.user = user
+
+        console.log(`verifica muy bien que es ${req.user.email}`)
         next()
     } catch (error) {
         next(error)

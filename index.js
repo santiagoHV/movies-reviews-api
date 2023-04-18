@@ -1,4 +1,5 @@
 const dotenv = require('dotenv')
 dotenv.config()
 
-require('./src/app')()
+const { init } = require('./src/app')
+init()
