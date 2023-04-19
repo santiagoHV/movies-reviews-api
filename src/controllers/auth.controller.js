@@ -23,13 +23,9 @@ const signIn = async(req, res, next) => {
     }
 }
 
-//TODO: just admin can create admin
 const signUp = async(req, res, next) => {
     try {
-        let { email, name, password, role } = req.body
-        if (!role) {
-            role = 'user'
-        }
+        let { email, name, password } = req.body
 
         const userFound = await Users.findOne({ where: { email } })
 
@@ -41,7 +37,7 @@ const signUp = async(req, res, next) => {
             name,
             email,
             password,
-            role
+            role: 'user'
         })
 
         const token = jwt.sign({ id: user.id },

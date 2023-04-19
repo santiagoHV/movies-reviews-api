@@ -16,6 +16,8 @@ router.get('/reviews/:id', [verifyToken, validateIsAdmin], () => {})
 
 router.put('/admin/publish/:id', [verifyToken, validateIsAdmin], moviesController.publishMovie)
 
+router.put('/admin/unpublish/:id', [verifyToken, validateIsAdmin], moviesController.unpublishMovie)
+
 router.post('/', verifyToken, moviesController.createMovie)
 
 router.post('/review/:movieId', verifyToken, reviewsController.createReview)

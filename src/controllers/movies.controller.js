@@ -1,6 +1,7 @@
 const Movies = require('../db/models/Movies')
 const Reviews = require('../db/models/Reviews')
 const Users = require('../db/models/Users')
+const { Op, Sequelize } = require('sequelize')
 
 const createMovie = async(req, res, next) => {
     try {
@@ -54,9 +55,50 @@ const unpublishMovie = async(req, res, next) => {
 //TODO: add calificacion promedio, paginacion y filtrado
 const getAllMovies = async(req, res, next) => {
     try {
-        const movies = await Movies.findAll({
+        const { page, pageSize } = req.query;
+        const searchQuery = req.query.search || ''
+        let limit, offset, movies
+
+        if (page && pageSize) {
+            limit = parseInt(pageSize)
+            offset = (parseInt(page) - 1) * limit
+
+            movies = await Movies.findAndCountAll({
+                offset,
+                limit,
+                where: {
+                    [Op.and]: [
+                        { published: true },
+                        Sequelize.where(
+                            Sequelize.fn('LOWER', Sequelize.col('title')),
+                            'LIKE',
+                            `%${searchQuery.toLowerCase()}%`
+                        )
+                    ]
+                }
+            })
+
+            movies = movies.rows
+        } else {
+            movies = await Movies.findAll({
+                where: {
+                    [Op.and]: [
+                        { published: true },
+                        Sequelize.where(
+                            Sequelize.fn('LOWER', Sequelize.col('title')),
+                            'LIKE',
+                            `%${searchQuery.toLowerCase()}%`
+                        )
+                    ]
+                }
+            })
+        }
+
+        const otherMovies = await Movies.findAll({
             where: { published: true },
         })
+        console.log(otherMovies)
+
         const moviesWithRating = await Promise.all(movies.map(async(movie) => {
             const rating = await movie.calculateRating()
             return {...movie.dataValues, rating }

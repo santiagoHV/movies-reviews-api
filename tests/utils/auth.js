@@ -10,10 +10,12 @@ async function login() {
     return res.body.token;
 }
 
-async function signup(token) {
+async function signup() {
     const res = await request(app)
         .post('/signup')
         .send({ email: 'user', password: 'user123' })
+
+    return res.body.token;
 }
 
 module.exports = { login, signup };

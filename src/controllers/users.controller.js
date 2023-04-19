@@ -26,8 +26,11 @@ const getUserById = async(req, res) => {
 
 const createAdmin = async(req, res) => {
     try {
-        id = req.body.userId
+        id = req.params.id
         const user = await Users.findByPk(id)
+        await user.becomeAdmin()
+        user.save()
+
         if (!user) {
             res.status(404).json({ message: 'User not found' })
         } else {
@@ -39,17 +42,38 @@ const createAdmin = async(req, res) => {
     }
 }
 
-//revisar
-const searchUser = async(req, res) => {
-    const { name } = req.query
-    const users = await Users.findAll({
-        where: {
-            name: {
-                [Op.like]: `%${name}%`
-            }
+const getReviews = async(req, res) => {
+    try {
+        const { userId } = req.params
+        const user = await Users.findByPk(userId)
+        if (!user) {
+            res.status(404).json({ message: 'User not found' })
+        } else {
+            const reviews = await user.getReviews()
+            res.status(200).json(reviews)
         }
-    })
+    } catch (err) {
+        next(err)
+    }
+}
 
+const searchUser = async(req, res) => {
+    try {
+        const name = req.params.name;
+
+        const users = await Users.findAll({
+            where: {
+                name: {
+                    [Op.iLike]: `%${name}%`
+                }
+            }
+        });
+
+        res.status(200).json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 }
 
 
@@ -57,5 +81,6 @@ module.exports = {
     getAllUsers,
     getUserById,
     createAdmin,
-    searchUser
+    searchUser,
+    getReviews
 }

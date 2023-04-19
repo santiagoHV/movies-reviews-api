@@ -9,8 +9,10 @@ router.get('/:id', usersController.getUserById)
 
 router.get('/search', usersController.searchUser)
 
-router.get('/reviews/:userId', [verifyToken, validateIsAdmin], () => {})
+router.get('/:name', [verifyToken, validateIsAdmin], usersController.searchUser)
 
-router.post('/create-admin/:id', usersController.createAdmin)
+router.get('/reviews/:userId', [verifyToken, validateIsAdmin], usersController.getReviews)
+
+router.put('/create-admin/:id', [verifyToken, validateIsAdmin], usersController.createAdmin)
 
 module.exports = router

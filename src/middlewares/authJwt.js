@@ -17,8 +17,6 @@ const verifyToken = async(req, res, next) => {
         }
 
         req.user = user
-
-        console.log(`verifica muy bien que es ${req.user.email}`)
         next()
     } catch (error) {
         next(error)
@@ -48,7 +46,7 @@ const canUpdateMovie = async(req, res, next) => {
     }
 }
 
-const isAdmin = async(role) => role === 'admin'
+const isAdmin = (role) => role === 'admin'
 
 module.exports = {
     verifyToken,

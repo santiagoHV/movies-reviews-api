@@ -33,7 +33,26 @@ const createReview = async(req, res, next) => {
     }
 }
 
+const deleteReview = async(req, res, next) => {
+    try {
+        const { id } = req.params
+        const review = await Reviews.findByPk(id)
+        if (!review) {
+            res.status(404).json({ message: 'Review not found' })
+        } else {
+            await review.destroy()
+            res.status(206).json()
+        }
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+}
+
+
+
 
 module.exports = {
     createReview,
+    deleteReview
 }
