@@ -17,6 +17,11 @@ describe('Movie model', () => {
         })
     })
 
+    afterAll(async() => {
+        // await Movies.destroy({ where: {} })
+        await Users.destroy({ where: {} })
+    })
+
     describe('create', () => {
 
         it('should create a new movie', async() => {
@@ -51,6 +56,7 @@ describe('Movie model', () => {
     })
 
     describe('read', () => {
+
         it('should find an array with one movie', async() => {
             const movies = await Movies.findAll()
             expect(movies.length).toBe(1)

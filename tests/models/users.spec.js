@@ -8,6 +8,11 @@ describe('Users model', () => {
         await sequelize.sync()
     })
 
+    afterAll(async() => {
+        await Movies.destroy({ where: {} })
+        await Users.destroy({ where: {} })
+    })
+
     describe('create', () => {
         it('should find an empty array', async() => {
             const users = await Users.findAll()
