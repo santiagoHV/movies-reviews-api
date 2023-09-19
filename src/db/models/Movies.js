@@ -32,6 +32,9 @@ Movies.init({
     },
     title: DataTypes.STRING,
     director: DataTypes.STRING,
+    description: DataTypes.STRING,
+    year: DataTypes.INTEGER,
+    clasifitation: DataTypes.ENUM(['G', 'PG', 'PG-13', 'R', 'NC-17']),
 }, {
     sequelize,
     modelName: 'Movies',

@@ -26,6 +26,14 @@ Users.init({
         type: DataTypes.STRING,
         allowNull: false
     },
+    lastname: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    birthdate: {
+        type: DataTypes.DATEONLY,
+        allowNull: false
+    },
     email: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -35,7 +43,12 @@ Users.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    role: Sequelize.ENUM(ROLES)
+    role: Sequelize.ENUM(ROLES),
+    isBanned: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+    },
 }, {
     sequelize,
     modelName: 'Users',
