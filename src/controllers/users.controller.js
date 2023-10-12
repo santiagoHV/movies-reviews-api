@@ -1,4 +1,4 @@
-const Users = require('../db/models/Users')
+const Users = require('../db/models/user.model')
 
 const getAllUsers = async(req, res) => {
     try {

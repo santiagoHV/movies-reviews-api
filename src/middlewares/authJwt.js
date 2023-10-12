@@ -1,5 +1,5 @@
-const Users = require('../db/models/Users')
-const Movies = require('../db/models/Movies')
+const Users = require('../db/models/user.model')
+const Movies = require('../db/models/movie.model')
 const jwt = require('jsonwebtoken')
 
 const verifyToken = async(req, res, next) => {

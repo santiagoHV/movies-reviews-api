@@ -1,20 +1,22 @@
 const { Sequelize } = require('sequelize')
+const setupModels = require('./models')
 
-const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_TEST, NODE_ENV } = process.env
+const { DB_URL, NODE_ENV } = process.env
 
-//TODO: Changes db separated variables for URI
+const options = {
+    logging: NODE_ENV === 'development' ? console.log : false
+}
 
-const sequelize = new Sequelize(
-    NODE_ENV === 'test' ? DB_TEST : DB_NAME,
-    DB_USER,
-    DB_PASSWORD, {
-        host: DB_HOST,
-        port: DB_PORT,
-        dialect: 'postgres',
-        sync: true,
-        logging: true
-    }
-);
+// if (config.isProd) {
+//     options.dialectOptions = {
+//         ssl: {
+//             rejectUnauthorized: false
+//         }
+//     }
+// }
 
+const sequelize = new Sequelize('postgres://user:password@localhost:5433/movie-review-api', options);
+
+setupModels(sequelize);
 
 module.exports = sequelize;

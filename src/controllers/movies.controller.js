@@ -1,6 +1,6 @@
-const Movies = require('../db/models/Movies')
-const Reviews = require('../db/models/Reviews')
-const Users = require('../db/models/Users')
+const Movies = require('../db/models/movie.model')
+const { Review } = require('../db/models/review.model')
+const { User } = require('../db/models/user.model')
 const { Op, Sequelize } = require('sequelize')
 
 const createMovie = async(req, res, next) => {
@@ -124,13 +124,13 @@ const getMovieById = async(req, res, next) => {
         const { id } = req.params
         const movie = await Movies.findByPk(id, {
             include: [{
-                    model: Reviews,
+                    model: Review,
                     include: [{
-                        model: Users,
+                        model: User,
                     }],
                 },
                 {
-                    model: Users,
+                    model: User,
                     as: 'Creator'
                 }
             ]

@@ -1,12 +1,14 @@
 {
-    "name": "byte4bit",
+    "name": "movie-reviews-api",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
         "test": "cross-env NODE_ENV=test jest --setupFiles dotenv/config --silent --forceExit",
         "dev": "cross-env NODE_ENV=development nodemon index.js",
-        "start": "cross-env NODE_ENV=production node index.js"
+        "start": "cross-env NODE_ENV=production node index.js",
+        "db:migrate": "sequelize db:migrate",
+        "db:generate": "sequelize migration:generate --name"
     },
     "keywords": [],
     "author": "",
@@ -20,7 +22,8 @@
         "morgan": "^1.10.0",
         "pg": "^8.10.0",
         "pg-hstore": "^2.3.4",
-        "sequelize": "^6.31.0"
+        "sequelize": "^6.33.0",
+        "sequelize-cli": "^6.6.1"
     },
     "devDependencies": {
         "jest": "^29.5.0",

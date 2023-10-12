@@ -1,5 +1,5 @@
 const Reviews = require('../db/models/Reviews')
-const Movies = require('../db/models/Movies')
+const Movies = require('../db/models/movie.model')
 
 // ver comentarios de un usuario
 //ver comentarios de una pelicula
