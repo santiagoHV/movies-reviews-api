@@ -31,7 +31,7 @@ class Preference extends Model {
         return {
             sequelize,
             modelName: 'Preference',
-            tableName: PREFERENCES_TABLE,
+            tableName: PREFERENCE_TABLE,
             timestamps: true
         }
     }

@@ -38,7 +38,7 @@ class Review extends Model {
         return {
             sequelize,
             modelName: 'Review',
-            tableName: REVIEWS_TABLE,
+            tableName: REVIEW_TABLE,
             timestamps: true
         }
     }

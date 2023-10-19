@@ -1,13 +1,14 @@
-const Movies = require('../db/models/movie.model')
+const { Movie } = require('../db/models/movie.model')
 const { Review } = require('../db/models/review.model')
 const { User } = require('../db/models/user.model')
+const { models } = require('../db/connection')
 const { Op, Sequelize } = require('sequelize')
 
 const createMovie = async(req, res, next) => {
     try {
         const { title, director } = req.body
         const user = req.user
-        const movie = await Movies.create({
+        const movie = await Movie.create({
             title,
             director,
             creatorId: user.id
@@ -21,11 +22,10 @@ const createMovie = async(req, res, next) => {
     }
 }
 
-
 const publishMovie = async(req, res, next) => {
     try {
         const { id } = req.params
-        const movie = await Movies.findByPk(id)
+        const movie = await Movie.findByPk(id)
         if (!movie) {
             res.status(404).json({ message: 'Movie not found' })
         } else {
@@ -40,7 +40,7 @@ const publishMovie = async(req, res, next) => {
 const unpublishMovie = async(req, res, next) => {
     try {
         const { id } = req.params
-        const movie = await Movies.findByPk(id)
+        const movie = await Movie.findByPk(id)
         if (!movie) {
             res.status(404).json({ message: 'Movie not found' })
         } else {
@@ -63,7 +63,7 @@ const getAllMovies = async(req, res, next) => {
             limit = parseInt(pageSize)
             offset = (parseInt(page) - 1) * limit
 
-            movies = await Movies.findAndCountAll({
+            movies = await Movie.findAndCountAll({
                 offset,
                 limit,
                 where: {
@@ -80,7 +80,7 @@ const getAllMovies = async(req, res, next) => {
 
             movies = movies.rows
         } else {
-            movies = await Movies.findAll({
+            movies = await Movie.findAll({
                 where: {
                     [Op.and]: [
                         { published: true },
@@ -94,7 +94,7 @@ const getAllMovies = async(req, res, next) => {
             })
         }
 
-        const otherMovies = await Movies.findAll({
+        const otherMovies = await Movie.findAll({
             where: { published: true },
         })
         console.log(otherMovies)
@@ -111,7 +111,7 @@ const getAllMovies = async(req, res, next) => {
 
 const getUnpublishedMovies = async(req, res, next) => {
     try {
-        const movies = await Movies.findAll({ where: { published: false } })
+        const movies = await Movie.findAll({ where: { published: false } })
         res.status(200).json(movies)
     } catch (error) {
         console.log(error)
@@ -122,7 +122,7 @@ const getUnpublishedMovies = async(req, res, next) => {
 const getMovieById = async(req, res, next) => {
     try {
         const { id } = req.params
-        const movie = await Movies.findByPk(id, {
+        const movie = await Movie.findByPk(id, {
             include: [{
                     model: Review,
                     include: [{
@@ -151,7 +151,7 @@ const updateMovie = async(req, res, next) => {
     try {
         const { id } = req.params
         const { title, director } = req.body
-        const movie = await Movies.findByPk(id)
+        const movie = await Movie.findByPk(id)
         if (!movie) {
             res.status(404).json({ message: 'Movie not found' })
         } else {
@@ -167,7 +167,7 @@ const updateMovie = async(req, res, next) => {
 const deleteMovie = async(req, res, next) => {
     try {
         const { id } = req.params
-        const movie = await Movies.findByPk(id)
+        const movie = await Movie.findByPk(id)
 
         if (!movie) {
             res.status(404).json({ message: 'Movie not found' })
