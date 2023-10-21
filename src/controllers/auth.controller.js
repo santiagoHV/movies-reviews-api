@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken')
-const Users = require('../db/models/user.model')
+const { User } = require('../db/models/user.model')
+const { config } = require('../config/config')
 
 const signIn = async(req, res, next) => {
     try {
         let { email, password } = req.body
 
-        const userFound = await Users.findOne({ where: { email } })
+        const userFound = await User.findOne({ where: { email } })
         if (!userFound) return res.status(400).json({ message: 'User not found' })
 
         const passwordMatch = await userFound.comparePassword(password)
@@ -25,23 +26,30 @@ const signIn = async(req, res, next) => {
 
 const signUp = async(req, res, next) => {
     try {
-        let { email, name, password } = req.body
+        let { email, lastname, name, password, role, birthdate } = req.body
 
-        const userFound = await Users.findOne({ where: { email } })
+        console.log('body:')
+        console.log(req.body)
+        const userFound = await User.findOne({ where: { email } })
 
         if (userFound) {
             return res.status(409).json({ message: 'Email already registered' })
         }
 
-        const user = await Users.create({
+        const user = await User.create({
             name,
             email,
+            lastname,
             password,
-            role: 'user'
+            birthdate: new Date(birthdate),
+            role
         })
 
+        console.log('user:')
+        console.log(user)
+
         const token = jwt.sign({ id: user.id },
-            process.env.JWT_SECRET, {
+            config.jwtSecret, {
                 expiresIn: 86400 //24 hours
             })
 

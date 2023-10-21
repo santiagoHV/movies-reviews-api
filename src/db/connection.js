@@ -1,10 +1,14 @@
 const { Sequelize } = require('sequelize')
 const setupModels = require('./models')
+const { config } = require('../config/config')
 
-const { DB_URL, NODE_ENV } = process.env
+
+console.log("config.db_url")
+console.log(config.db_url)
+console.log("postgres://user:password@localhost:5433/movie-review-api")
 
 const options = {
-    logging: NODE_ENV === 'development' ? console.log : false
+    logging: true
 }
 
 // if (config.isProd) {
@@ -15,7 +19,7 @@ const options = {
 //     }
 // }
 
-const sequelize = new Sequelize('postgres://user:password@localhost:5433/movie-review-api', options);
+const sequelize = new Sequelize(config.db_url, options);
 
 setupModels(sequelize);
 

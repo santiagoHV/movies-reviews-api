@@ -1,8 +1,10 @@
-const env = process.env.NODE_ENV || 'development'
+require('dotenv').config()
 
-const envs = {
-    dev: '.env',
-    test: '.env.test',
+const config = {
+    env: process.env.NODE_ENV || 'development',
+    port: process.env.PORT || 3000,
+    jwtSecret: process.env.JWT_SECRET,
+    db_url: process.env.DB_URL,
 }
 
-require('dotenv').config()
+module.exports = { config }

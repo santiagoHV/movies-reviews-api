@@ -1,5 +1,5 @@
-const Reviews = require('../db/models/Reviews')
-const Movies = require('../db/models/movie.model')
+const { Review } = require('../db/models/review.model')
+const { Movie } = require('../db/models/movie.model')
 
 // ver comentarios de un usuario
 //ver comentarios de una pelicula
@@ -11,7 +11,7 @@ const createReview = async(req, res, next) => {
         const { movieId } = req.params
 
         const user = req.user
-        const movie = await Movies.findByPk(movieId)
+        const movie = await Movie.findByPk(movieId)
 
         if (!movie) {
             res.status(404).json({ message: 'Movie not found' })
@@ -21,7 +21,7 @@ const createReview = async(req, res, next) => {
             res.status(403).json({ message: 'Movie not published' })
         }
 
-        const review = await Reviews.create({
+        const review = await Review.create({
             movieId: movie.id,
             comment,
             rating,
@@ -36,7 +36,7 @@ const createReview = async(req, res, next) => {
 const deleteReview = async(req, res, next) => {
     try {
         const { id } = req.params
-        const review = await Reviews.findByPk(id)
+        const review = await Review.findByPk(id)
         if (!review) {
             res.status(404).json({ message: 'Review not found' })
         } else {
