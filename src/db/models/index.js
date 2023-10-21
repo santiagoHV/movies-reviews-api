@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 const { Category, categorySchema } = require("./category.model");
 const { Movie, movieSchema } = require("./movie.model");
 const { User, userSchema } = require("./user.model");
@@ -18,6 +20,12 @@ const setupModels = (sequelize) => {
     Category.associate(sequelize.models)
     Review.associate(sequelize.models)
     Movie.associate(sequelize.models)
+
+    User.beforeCreate(async(user) => {
+        console.log('before create')
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        user.password = hashedPassword;
+    })
 
 }
 

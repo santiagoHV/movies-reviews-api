@@ -122,25 +122,13 @@ const getUnpublishedMovies = async(req, res, next) => {
 const getMovieById = async(req, res, next) => {
     try {
         const { id } = req.params
-        const movie = await Movie.findByPk(id, {
-            include: [{
-                    model: Review,
-                    include: [{
-                        model: User,
-                    }],
-                },
-                {
-                    model: User,
-                    as: 'Creator'
-                }
-            ]
-        })
-        const rating = await movie.calculateRating()
+        const movie = await Movie.findByPk(id)
+            // const rating = await movie.calculateRating()
 
         if (!movie) {
             res.status(404).json({ message: 'Movie not found' })
         } else {
-            res.status(200).json({ movie, rating })
+            res.status(200).json({ movie })
         }
     } catch (err) {
         next(err)
