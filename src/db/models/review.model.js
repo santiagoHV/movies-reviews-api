@@ -1,12 +1,31 @@
 const { DataTypes, Model } = require('sequelize');
 
+const { USER_TABLE } = require('./user.model');
+const { MOVIE_TABLE } = require('./movie.model');
 const REVIEW_TABLE = 'reviews';
+
 
 const reviewSchema = {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+    },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: USER_TABLE,
+            key: 'id'
+        }
+    },
+    movieId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: MOVIE_TABLE,
+            key: 'id'
+        }
     },
     comment: {
         type: DataTypes.STRING,
