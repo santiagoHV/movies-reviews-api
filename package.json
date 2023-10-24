@@ -7,7 +7,7 @@
         "test": "cross-env NODE_ENV=test jest --setupFiles dotenv/config --silent --forceExit",
         "dev": "cross-env NODE_ENV=development nodemon index.js",
         "start": "cross-env NODE_ENV=production node index.js",
-        "db:migrate": "sequelize db:migrate",
+        "db:migrate": "npx sequelize-cli db:migrate",
         "db:generate": "sequelize migration:generate --name"
     },
     "keywords": [],
