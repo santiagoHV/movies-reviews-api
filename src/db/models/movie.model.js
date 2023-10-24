@@ -35,6 +35,11 @@ class Movie extends Model {
             otherKey: 'categoryId',
             as: 'categories'
         })
+
+        Movie.belongsTo(models.User, {
+            foreignKey: 'creatorId',
+            as: 'creator'
+        })
     }
 
     static config(sequelize) {

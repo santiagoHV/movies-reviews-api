@@ -7,7 +7,7 @@
         "test": "cross-env NODE_ENV=test jest --setupFiles dotenv/config --silent --forceExit",
         "dev": "cross-env NODE_ENV=development nodemon index.js",
         "start": "cross-env NODE_ENV=production node index.js",
-        "db:migrate": "sequelize db:migrate",
+        "db:migrate": "npx sequelize-cli db:migrate",
         "db:generate": "sequelize migration:generate --name"
     },
     "keywords": [],
@@ -15,6 +15,7 @@
     "license": "ISC",
     "dependencies": {
         "bcryptjs": "^2.4.3",
+        "cross-env": "^7.0.3",
         "dotenv": "^16.0.3",
         "express": "^4.18.2",
         "helmet": "^6.1.5",

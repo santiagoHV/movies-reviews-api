@@ -1,6 +1,7 @@
 const { Movie } = require('../db/models/movie.model')
 const { Review } = require('../db/models/review.model')
 const { User } = require('../db/models/user.model')
+const { Category } = require('../db/models/category.model')
 const { models } = require('../db/connection')
 const { Op, Sequelize } = require('sequelize')
 
@@ -90,14 +91,27 @@ const getAllMovies = async(req, res, next) => {
                             `%${searchQuery.toLowerCase()}%`
                         )
                     ]
-                }
+                },
+                include: [{
+                        model: User,
+                        as: 'creator'
+                    },
+                    {
+                        model: Review,
+                        as: 'review',
+                        include: [{
+                            model: User,
+                            as: 'user'
+                        }]
+                    },
+                    {
+                        model: Category,
+                        as: 'categories'
+                    }
+                ],
             })
         }
 
-        const otherMovies = await Movie.findAll({
-            where: { published: true },
-        })
-        console.log(otherMovies)
 
         const moviesWithRating = await Promise.all(movies.map(async(movie) => {
             const rating = await movie.calculateRating()

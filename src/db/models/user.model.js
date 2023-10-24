@@ -51,6 +51,11 @@ class User extends Model {
             as: 'review'
         })
 
+        User.hasMany(models.Movie, {
+            foreignKey: 'creatorId',
+            as: 'creator'
+        })
+
         User.belongsToMany(models.Category, {
             through: models.Preference,
             foreignKey: 'userId',

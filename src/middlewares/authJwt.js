@@ -1,5 +1,5 @@
-const Users = require('../db/models/user.model')
-const Movies = require('../db/models/movie.model')
+const {User} = require('../db/models/user.model')
+const {Movie} = require('../db/models/movie.model')
 const jwt = require('jsonwebtoken')
 
 const verifyToken = async(req, res, next) => {
@@ -8,7 +8,7 @@ const verifyToken = async(req, res, next) => {
 
     try {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-        const user = await Users.findByPk(decodedToken.id)
+        const user = await User.findByPk(decodedToken.id)
 
         if (!user) {
             return res.status(401).json({
@@ -34,7 +34,7 @@ const validateIsAdmin = (req, res, next) => {
 
 const canUpdateMovie = async(req, res, next) => {
     const { id } = req.params
-    const movie = await Movies.findByPk(id)
+    const movie = await Movie.findByPk(id)
     if (!movie) return res.status(404).json({ message: 'Movie not found' })
 
     if (movie.creatorId === req.user.id) {
