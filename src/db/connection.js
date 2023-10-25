@@ -7,7 +7,8 @@ console.log("config.db_url")
 console.log(config.db_url)
 
 const options = {
-    logging: true
+    logging: true,
+    dialect: 'postgres',
 }
 
 if (config.isProd) {
