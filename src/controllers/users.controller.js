@@ -1,8 +1,8 @@
-const Users = require('../db/models/user.model')
+const { User } = require('../db/models/user.model')
 
 const getAllUsers = async(req, res) => {
     try {
-        const users = await Users.findAll()
+        const users = await User.findAll()
         res.status(200).json(users)
     } catch (error) {
         next(error)
@@ -12,7 +12,7 @@ const getAllUsers = async(req, res) => {
 const getUserById = async(req, res) => {
     try {
         const { id } = req.params
-        const user = await Users.findByPk(id)
+        const user = await User.findByPk(id)
         console.log(user.reviews)
         if (!user) {
             res.status(404).json({ message: 'User not found' })
@@ -27,7 +27,7 @@ const getUserById = async(req, res) => {
 const createAdmin = async(req, res) => {
     try {
         id = req.params.id
-        const user = await Users.findByPk(id)
+        const user = await User.findByPk(id)
         await user.becomeAdmin()
         user.save()
 
@@ -45,7 +45,7 @@ const createAdmin = async(req, res) => {
 const getReviews = async(req, res) => {
     try {
         const { userId } = req.params
-        const user = await Users.findByPk(userId)
+        const user = await User.findByPk(userId)
         if (!user) {
             res.status(404).json({ message: 'User not found' })
         } else {
@@ -61,7 +61,7 @@ const searchUser = async(req, res) => {
     try {
         const name = req.params.name;
 
-        const users = await Users.findAll({
+        const users = await User.findAll({
             where: {
                 name: {
                     [Op.iLike]: `%${name}%`
