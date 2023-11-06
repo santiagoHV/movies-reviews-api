@@ -7,13 +7,27 @@ const { Op, Sequelize } = require('sequelize')
 
 const createMovie = async(req, res, next) => {
     try {
-        const { title, director } = req.body
+        const {
+            title,
+            director,
+            description,
+            year,
+            clasifitation,
+            categories
+        } = req.body
         const user = req.user
+
         const movie = await Movie.create({
             title,
             director,
+            description,
+            year,
+            clasifitation,
             creatorId: user.id
         })
+
+        await movie.addCategories(categories)
+
         res.status(201).json({
             message: 'Movie created for approval',
             movie
@@ -136,7 +150,27 @@ const getUnpublishedMovies = async(req, res, next) => {
 const getMovieById = async(req, res, next) => {
     try {
         const { id } = req.params
-        const movie = await Movie.findByPk(id)
+        const movie = await Movie.findByPk(id, {
+                include: [{
+                        model: User,
+                        as: 'creator'
+                    },
+                    {
+                        model: Review,
+                        as: 'review',
+                        include: [{
+                            model: User,
+                            as: 'user',
+                            attributes: ['name', 'lastname', 'email']
+                        }]
+                    },
+                    {
+                        model: Category,
+                        as: 'categories',
+                        attributes: ['name', 'description'],
+                    }
+                ],
+            })
             // const rating = await movie.calculateRating()
 
         if (!movie) {

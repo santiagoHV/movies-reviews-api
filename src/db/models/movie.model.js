@@ -40,6 +40,8 @@ class Movie extends Model {
             foreignKey: 'creatorId',
             as: 'creator'
         })
+
+        // addCategories = 
     }
 
     static config(sequelize) {

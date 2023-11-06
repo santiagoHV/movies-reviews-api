@@ -1,0 +1,95 @@
+[33mcommit 21a2b625ae2f55454c5eb5f9c7774bbbb44c5eb5[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Santiago Herrerea <santiherreravelas@gmail.com>
+Date:   Tue Oct 24 16:45:27 2023 -0500
+
+    shit
+
+[33mcommit 373361ff5d48f9dd197934c3b9f0450d7c80362c[m
+Author: Santiago Herrerea <santiherreravelas@gmail.com>
+Date:   Tue Oct 24 16:44:43 2023 -0500
+
+    shit
+
+[33mcommit 67f2fc021e1fb29ce25dadc6af9780f1e0398cdc[m
+Author: Santiago Herrerea <santiherreravelas@gmail.com>
+Date:   Fri Oct 20 20:02:43 2023 -0500
+
+    fixing auth
+
+[33mcommit 439bdea91dbae5dd269f9d9d6d5032aa9cdb5325[m
+Author: Santiago Herrerea <santiherreravelas@gmail.com>
+Date:   Thu Oct 19 17:46:41 2023 -0500
+
+    correcting errors
+
+[33mcommit 11fa0e14a4b4aad03db45294b4e98c1e23f73923[m
+Author: Santiago Herrerea <santiherreravelas@gmail.com>
+Date:   Thu Oct 12 16:58:33 2023 -0500
+
+    sequelize and migrations up
+
+[33mcommit bfea6a13bfed38d1602f79cfe47828564b271854[m
+Author: Santiago Herrerea <santiherreravelas@gmail.com>
+Date:   Tue Sep 19 17:27:08 2023 -0500
+
+    adding models
+
+[33mcommit 22f2da605a1f8299619fd885ba065012a1f25cb1[m
+Author: Santiago Herrera Velásquez <santiherreravelas@gmail.com>
+Date:   Wed Apr 19 09:59:38 2023 -0500
+
+    removing unused files
+
+[33mcommit 393426754843d01c4eadd8783c1f14bd3d7f2854[m
+Author: Santiago Herrera Velásquez <santiherreravelas@gmail.com>
+Date:   Tue Apr 18 23:24:53 2023 -0500
+
+    more tests
+
+[33mcommit 687a6e9c0490293eb933414ec099bb1aa5f159b3[m
+Author: Santiago Herrera Velásquez <santiherreravelas@gmail.com>
+Date:   Tue Apr 18 22:51:07 2023 -0500
+
+    readme added
+
+[33mcommit 7b3d4bda10919718a4c4a1a94b3ef08097f6e890[m
+Author: Santiago Herrera Velásquez <santiherreravelas@gmail.com>
+Date:   Tue Apr 18 22:37:50 2023 -0500
+
+    added tests and final endpoints
+
+[33mcommit 3c67074029ed2b47ea1c19833cfa44a425cc33e0[m
+Author: Santiago Herrera Velásquez <santiherreravelas@gmail.com>
+Date:   Tue Apr 18 10:53:52 2023 -0500
+
+    Added relations, endpoints and test sets
+
+[33mcommit 0c8541ecc8f037a9c3086671c241f32bf59ba4c9[m
+Author: Santiago Herrerea <santiherreravelas@gmail.com>
+Date:   Mon Apr 17 17:31:48 2023 -0500
+
+    Adding new endpoints
+
+[33mcommit 9aa0fbba9e999129b31a1e879eec7cce3d18961b[m
+Author: Santiago Herrera Velásquez <santiherreravelas@gmail.com>
+Date:   Sun Apr 16 23:33:05 2023 -0500
+
+    new endpoints and auth middlewares added
+
+[33mcommit f935217b03bc6ccd29d77f7ab7418b4ce8c54aa9[m
+Author: Santiago Herrera Velásquez <santiherreravelas@gmail.com>
+Date:   Sun Apr 16 13:26:24 2023 -0500
+
+    removed .idea
+
+[33mcommit 99356347d087ac3a457fd046d5e48c4bb36db27e[m
+Author: Santiago Herrera Velásquez <santiherreravelas@gmail.com>
+Date:   Sun Apr 16 13:24:39 2023 -0500
+
+    Initial commit
+
+[33mcommit d54d6470b1289e2caa46d8cce63cdf2a4b0367f3[m
+Author: Santiago Herrera Velásquez <santiherreravelas@gmail.com>
+Date:   Sun Apr 16 13:24:14 2023 -0500
+
+    gitignore
