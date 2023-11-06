@@ -14,6 +14,10 @@ const movieSchema = {
         defaultValue: false,
         allowNull: false,
     },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     title: DataTypes.STRING,
     director: DataTypes.STRING,
     description: DataTypes.STRING,
