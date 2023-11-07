@@ -12,7 +12,8 @@ const createMovie = async(req, res, next) => {
             director,
             description,
             year,
-            clasifitation,
+            image,
+            clasification,
             categories
         } = req.body
         const user = req.user
@@ -22,7 +23,8 @@ const createMovie = async(req, res, next) => {
             director,
             description,
             year,
-            clasifitation,
+            image,
+            clasification,
             creatorId: user.id
         })
 
@@ -186,12 +188,31 @@ const getMovieById = async(req, res, next) => {
 const updateMovie = async(req, res, next) => {
     try {
         const { id } = req.params
-        const { title, director } = req.body
+        const {
+            title,
+            director,
+            description,
+            year,
+            image,
+            clasification,
+            categories
+        } = req.body
+
         const movie = await Movie.findByPk(id)
         if (!movie) {
             res.status(404).json({ message: 'Movie not found' })
         } else {
-            await movie.update({ title, director, published: false })
+            await movie.update({
+                title,
+                director,
+                description,
+                year,
+                image,
+                clasification,
+                published: false
+            })
+
+            await movie.setCategories(categories)
             res.status(200).json(movie)
         }
     } catch (err) {
