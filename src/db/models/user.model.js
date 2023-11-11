@@ -83,4 +83,4 @@ class User extends Model {
     }
 }
 
-module.exports = { User, userSchema, USER_TABLE }
+module.exports = { User, userSchema, USER_TABLE, ROLES }
