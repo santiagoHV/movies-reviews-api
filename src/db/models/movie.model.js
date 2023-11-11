@@ -22,7 +22,7 @@ const movieSchema = {
     director: DataTypes.STRING,
     description: DataTypes.STRING,
     year: DataTypes.INTEGER,
-    clasification: DataTypes.ENUM(['G', 'PG', 'PG-13', 'R', 'NC-17']),
+    clasification: DataTypes.ENUM(),
 }
 
 class Movie extends Model {
