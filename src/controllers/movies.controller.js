@@ -153,13 +153,16 @@ const getMovieById = async(req, res, next) => {
     try {
         const { id } = req.params
         const movie = await Movie.findByPk(id, {
+                attributes: ['id', 'title', 'director', 'description', 'year', 'image', 'clasification', 'published'],
                 include: [{
                         model: User,
-                        as: 'creator'
+                        as: 'creator',
+                        attributes: ['name', 'lastname', 'email']
                     },
                     {
                         model: Review,
-                        as: 'review',
+                        as: 'reviews',
+                        attributes: ['id', 'comment', 'rating', 'createdAt'],
                         include: [{
                             model: User,
                             as: 'user',
@@ -173,12 +176,15 @@ const getMovieById = async(req, res, next) => {
                     }
                 ],
             })
-            // const rating = await movie.calculateRating()
+
+            const rating = await movie.calculateRating()
+
+            const jsonMovie = {...movie.dataValues, rating }
 
         if (!movie) {
             res.status(404).json({ message: 'Movie not found' })
         } else {
-            res.status(200).json({ movie })
+            res.status(200).json(jsonMovie)
         }
     } catch (err) {
         next(err)

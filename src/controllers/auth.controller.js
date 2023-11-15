@@ -17,7 +17,9 @@ const signIn = async(req, res, next) => {
                 expiresIn: 86400 //24 hours
             })
 
-        res.status(201).json({ email, token })
+        const role = userFound.role
+
+        res.status(201).json({ email, token, role })
     } catch (error) {
         console.log(error)
         next(error)
@@ -45,8 +47,6 @@ const signUp = async(req, res, next) => {
             role
         })
 
-        console.log('user:')
-        console.log(user)
 
         const token = jwt.sign({ id: user.id },
             config.jwtSecret, {
@@ -56,7 +56,8 @@ const signUp = async(req, res, next) => {
         res.status(200).json({
             email: user.email,
             message: 'User created!',
-            token
+            token,
+            role
         })
     } catch (error) {
         console.log(error)

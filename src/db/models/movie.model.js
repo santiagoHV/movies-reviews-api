@@ -30,7 +30,7 @@ class Movie extends Model {
     static associate(models) {
         Movie.hasMany(models.Review, {
             foreignKey: 'movieId',
-            as: 'review'
+            as: 'reviews'
         })
 
         Movie.belongsToMany(models.Category, {
