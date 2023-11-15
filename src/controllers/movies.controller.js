@@ -110,19 +110,13 @@ const getAllMovies = async(req, res, next) => {
                 },
                 include: [{
                         model: User,
-                        as: 'creator'
-                    },
-                    {
-                        model: Review,
-                        as: 'review',
-                        include: [{
-                            model: User,
-                            as: 'user'
-                        }]
+                        as: 'creator',
+                        attributes: ['name', 'lastname', 'email']
                     },
                     {
                         model: Category,
-                        as: 'categories'
+                        as: 'categories',
+                        attributes: ['name', 'description'],
                     }
                 ],
             })
@@ -141,7 +135,19 @@ const getAllMovies = async(req, res, next) => {
 
 const getUnpublishedMovies = async(req, res, next) => {
     try {
-        const movies = await Movie.findAll({ where: { published: false } })
+        const movies = await Movie.findAll({ 
+            where: { published: false },
+            include: [{
+                model: User,
+                as: 'creator',
+                attributes: ['name', 'lastname', 'email']
+            },
+            {
+                model: Category,
+                as: 'categories',
+                attributes: ['name', 'description'],
+            }]
+        })
         res.status(200).json(movies)
     } catch (error) {
         console.log(error)
