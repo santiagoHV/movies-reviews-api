@@ -5,7 +5,11 @@ const { verifyToken, validateIsAdmin } = require('../middlewares/authJwt')
 
 router.get('/', usersController.getAllUsers)
 
-router.get('/:id', usersController.getUserById)
+router.get('/:id', usersController.getUser)
+
+router.get('/:email', usersController.getUser)
+
+router.put('/:id', usersController.updateUser)
 
 router.get('/search', usersController.searchUser)
 

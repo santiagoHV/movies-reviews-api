@@ -9,14 +9,43 @@ const getAllUsers = async(req, res) => {
     }
 }
 
-const getUserById = async(req, res) => {
+const getUser = async(req, res) => {
     try {
-        const { id } = req.params
-        const user = await User.findByPk(id)
-        console.log(user.reviews)
+        const { id, email } = req.params
+        if(id) {
+            const user = await User.findByPk(id)
+            if (!user) {
+                res.status(404).json({ message: 'User not found' })
+            } else {
+                res.status(200).json(user)
+            }
+        } else if(email) {
+            const user = await User.findOne({ where: { email } })
+            if (!user) {
+                res.status(404).json({ message: 'User not found' })
+            } else {
+                res.status(200).json(user)
+            }
+        }
+
         if (!user) {
             res.status(404).json({ message: 'User not found' })
         } else {
+            res.status(200).json(user)
+        }
+    } catch (err) {
+        next(err)
+    }
+}
+
+const updateUser = async(req, res) => {
+    try {
+        const { id } = req.params
+        const user = await User.findByPk(id)
+        if (!user) {
+            res.status(404).json({ message: 'User not found' })
+        } else {
+            await user.update(req.body)
             res.status(200).json(user)
         }
     } catch (err) {
@@ -79,7 +108,7 @@ const searchUser = async(req, res) => {
 
 module.exports = {
     getAllUsers,
-    getUserById,
+    getUser,
     createAdmin,
     searchUser,
     getReviews
