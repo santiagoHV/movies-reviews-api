@@ -172,7 +172,7 @@ const getMovieById = async(req, res, next) => {
                         include: [{
                             model: User,
                             as: 'user',
-                            attributes: ['name', 'lastname', 'email']
+                            attributes: ['name', 'lastname', 'email', 'id']
                         }]
                     },
                     {
