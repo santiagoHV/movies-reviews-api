@@ -109,6 +109,7 @@ const searchUser = async(req, res) => {
 module.exports = {
     getAllUsers,
     getUser,
+    updateUser,
     createAdmin,
     searchUser,
     getReviews
