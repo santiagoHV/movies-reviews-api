@@ -17,9 +17,9 @@ const signIn = async(req, res, next) => {
                 expiresIn: 86400 //24 hours
             })
 
-        const role = userFound.role
+        const {role, id} = userFound
 
-        res.status(201).json({ email, token, role })
+        res.status(201).json({ email, token, role, id })
     } catch (error) {
         console.log(error)
         next(error)
@@ -30,8 +30,6 @@ const signUp = async(req, res, next) => {
     try {
         let { email, lastname, name, password, role, birthdate } = req.body
 
-        console.log('body:')
-        console.log(req.body)
         const userFound = await User.findOne({ where: { email } })
 
         if (userFound) {

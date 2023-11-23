@@ -15,7 +15,7 @@ router.get('/search', usersController.searchUser)
 
 router.get('/:name', [verifyToken, validateIsAdmin], usersController.searchUser)
 
-router.get('/reviews/:userId', [verifyToken, validateIsAdmin], usersController.getReviews)
+router.get('/reviews/:userId', usersController.getReviews)
 
 router.put('/create-admin/:id', [verifyToken, validateIsAdmin], usersController.createAdmin)
 
