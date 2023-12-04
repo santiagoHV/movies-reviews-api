@@ -102,6 +102,7 @@ const getAllMovies = async(req, res, next) => {
                 where: {
                     [Op.and]: [
                         { published: true },
+                        { status: 'approved' },
                         Sequelize.where(
                             Sequelize.fn('LOWER', Sequelize.col('title')),
                             'LIKE',
@@ -137,7 +138,10 @@ const getAllMovies = async(req, res, next) => {
 const getUnpublishedMovies = async(req, res, next) => {
     try {
         const movies = await Movie.findAll({ 
-            where: { published: false },
+            where: [
+                { published: false },
+                { status: 'pending' }
+            ],
             include: [{
                 model: User,
                 as: 'creator',
@@ -250,6 +254,31 @@ const deleteMovie = async(req, res, next) => {
     }
 }
 
+const getMoviesByUser = async(req, res, next) => {
+    try {
+        const { userId } = req.params
+        const movies = await Movie.findAll({
+            where: {
+                creatorId: userId
+            },
+            include: [{
+                    model: User,
+                    as: 'creator',
+                    attributes: ['name', 'lastname', 'email']
+                },
+                {
+                    model: Category,
+                    as: 'categories',
+                    attributes: ['name', 'description'],
+                }
+            ],
+        })
+        res.status(200).json(movies)
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     createMovie,
     getAllMovies,
@@ -258,5 +287,6 @@ module.exports = {
     updateMovie,
     getUnpublishedMovies,
     publishMovie,
-    unpublishMovie
+    unpublishMovie,
+    getMoviesByUser
 }
