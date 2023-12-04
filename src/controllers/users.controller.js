@@ -1,3 +1,4 @@
+const { Category } = require('../db/models/category.model')
 const { User } = require('../db/models/user.model')
 
 const getAllUsers = async(req, res) => {
@@ -13,7 +14,14 @@ const getUser = async(req, res) => {
     try {
         const { id, email } = req.params
         if(id) {
-            const user = await User.findByPk(id)
+            const user = await User.findByPk(id, 
+                { include:  [
+                    {
+                        model: Category,
+                        as: 'categories',
+                    }
+                ]
+                })
             if (!user) {
                 res.status(404).json({ message: 'User not found' })
             } else {
@@ -105,6 +113,37 @@ const searchUser = async(req, res) => {
     }
 }
 
+const addPreferences = async(req, res) => {
+    try {
+        const id = req.user.id
+        const { preferences } = req.body
+        const user = await User.findByPk(id)
+        if (!user) {
+            res.status(404).json({ message: 'User not found' })
+        } else {
+            await user.addCategories(preferences)
+            res.status(200).json(user)
+        }
+    } catch (err) {
+        next(err)
+    }
+}
+
+const updatePreferences = async(req, res) => {
+    try {
+        const id = req.user.id
+        const { preferences } = req.body
+        const user = await User.findByPk(id)
+        if (!user) {
+            res.status(404).json({ message: 'User not found' })
+        } else {
+            await user.setPreferences(preferences)
+            res.status(200).json(user)
+        }
+    } catch (err) {
+        next(err)
+    }
+}
 
 module.exports = {
     getAllUsers,
@@ -112,5 +151,7 @@ module.exports = {
     updateUser,
     createAdmin,
     searchUser,
-    getReviews
+    getReviews,
+    addPreferences,
+    updatePreferences
 }

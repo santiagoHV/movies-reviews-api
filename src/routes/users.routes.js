@@ -19,4 +19,8 @@ router.get('/reviews/:userId', usersController.getReviews)
 
 router.put('/create-admin/:id', [verifyToken, validateIsAdmin], usersController.createAdmin)
 
+router.post('/preferences',[verifyToken], usersController.addPreferences)
+
+router.put('/preferences', [verifyToken], usersController.updatePreferences)
+
 module.exports = router
