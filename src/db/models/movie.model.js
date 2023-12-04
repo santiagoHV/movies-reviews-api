@@ -23,6 +23,7 @@ const movieSchema = {
     description: DataTypes.STRING,
     year: DataTypes.INTEGER,
     clasification: DataTypes.ENUM(['G', 'PG', 'PG-13', 'R', 'NC-17']),
+    status: DataTypes.ENUM(['approved', 'rejected', 'pending', 'deleted']),
 }
 
 class Movie extends Model {

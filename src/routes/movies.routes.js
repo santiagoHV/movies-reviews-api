@@ -12,8 +12,6 @@ router.get('/admin/unpublished', [verifyToken, validateIsAdmin], moviesControlle
 
 router.put('/:id', [verifyToken, canUpdateMovie], moviesController.updateMovie)
 
-router.get('/reviews/:id', [verifyToken, validateIsAdmin], () => {})
-
 router.put('/admin/publish/:id', [verifyToken, validateIsAdmin], moviesController.publishMovie)
 
 router.put('/admin/unpublish/:id', [verifyToken, validateIsAdmin], moviesController.unpublishMovie)

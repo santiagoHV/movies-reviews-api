@@ -46,7 +46,7 @@ const publishMovie = async(req, res, next) => {
         if (!movie) {
             res.status(404).json({ message: 'Movie not found' })
         } else {
-            await movie.update({ published: true })
+            await movie.update({ published: true, status: 'approved' })
             res.status(200).json(movie)
         }
     } catch (err) {
@@ -61,7 +61,7 @@ const unpublishMovie = async(req, res, next) => {
         if (!movie) {
             res.status(404).json({ message: 'Movie not found' })
         } else {
-            await movie.update({ published: false })
+            await movie.update({ published: false, status: 'rejected' })
             res.status(200).json(movie)
         }
     } catch (err) {
@@ -86,6 +86,7 @@ const getAllMovies = async(req, res, next) => {
                 where: {
                     [Op.and]: [
                         { published: true },
+                        { status: 'approved' },
                         Sequelize.where(
                             Sequelize.fn('LOWER', Sequelize.col('title')),
                             'LIKE',
