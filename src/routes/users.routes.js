@@ -9,7 +9,7 @@ router.get('/:id', usersController.getUser)
 
 router.get('/:email', usersController.getUser)
 
-router.put('/:id', usersController.updateUser)
+// router.put('/:id', usersController.updateUser)
 
 router.get('/search', usersController.searchUser)
 
@@ -19,8 +19,8 @@ router.get('/reviews/:userId', usersController.getReviews)
 
 router.put('/create-admin/:id', [verifyToken, validateIsAdmin], usersController.createAdmin)
 
-router.post('/preferences',[verifyToken], usersController.addPreferences)
+router.post('/preferences/',[verifyToken], usersController.addPreferences)
 
-router.put('/preferences', [verifyToken], usersController.updatePreferences)
+router.put('/preferences/', [verifyToken], usersController.updatePreferences)
 
 module.exports = router

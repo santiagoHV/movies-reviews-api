@@ -19,6 +19,7 @@ const getUser = async(req, res) => {
                     {
                         model: Category,
                         as: 'categories',
+                        attributes: ['id', 'name'],
                     }
                 ]
                 })
@@ -34,12 +35,6 @@ const getUser = async(req, res) => {
             } else {
                 res.status(200).json(user)
             }
-        }
-
-        if (!user) {
-            res.status(404).json({ message: 'User not found' })
-        } else {
-            res.status(200).json(user)
         }
     } catch (err) {
         next(err)
@@ -131,13 +126,14 @@ const addPreferences = async(req, res) => {
 
 const updatePreferences = async(req, res) => {
     try {
+        console.log('entro')
         const id = req.user.id
         const { preferences } = req.body
         const user = await User.findByPk(id)
         if (!user) {
             res.status(404).json({ message: 'User not found' })
         } else {
-            await user.setPreferences(preferences)
+            await user.setCategories(preferences)
             res.status(200).json(user)
         }
     } catch (err) {
