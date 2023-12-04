@@ -1,5 +1,6 @@
 const { Category } = require('../db/models/category.model')
 const { User } = require('../db/models/user.model')
+const { Review } = require('../db/models/review.model')
 
 const getAllUsers = async(req, res) => {
     try {
@@ -77,12 +78,17 @@ const createAdmin = async(req, res) => {
 const getReviews = async(req, res) => {
     try {
         const { userId } = req.params
-        const user = await User.findByPk(userId)
+        const user = await User.findByPk(userId, {
+            include: {
+                model: Review,
+                as: 'review',
+                attributes: ['rating', 'comment']
+            }
+        })
         if (!user) {
             res.status(404).json({ message: 'User not found' })
         } else {
-            const reviews = await user.getReviews()
-            res.status(200).json(reviews)
+            res.status(200).json(user)
         }
     } catch (err) {
         next(err)
