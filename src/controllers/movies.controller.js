@@ -226,7 +226,8 @@ const updateMovie = async(req, res, next) => {
                 year,
                 image,
                 clasification,
-                published: false
+                published: false,
+                status: 'pending'
             })
 
             await movie.setCategories(categories)

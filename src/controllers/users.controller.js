@@ -82,7 +82,12 @@ const getReviews = async(req, res) => {
             include: {
                 model: Review,
                 as: 'review',
-                attributes: ['rating', 'comment']
+                attributes: ['rating', 'comment'],
+                include: {
+                    model: Movie,
+                    as: 'movie',
+                    attributes: ['title', 'id']
+                }
             }
         })
         if (!user) {
