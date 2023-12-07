@@ -1,6 +1,7 @@
 const { Category } = require('../db/models/category.model')
 const { User } = require('../db/models/user.model')
 const { Review } = require('../db/models/review.model')
+const { Movie } = require('../db/models/movie.model')
 
 const getAllUsers = async(req, res) => {
     try {
@@ -14,22 +15,20 @@ const getAllUsers = async(req, res) => {
 const getUser = async(req, res) => {
     try {
         const { id, email } = req.params
-        if(id) {
-            const user = await User.findByPk(id, 
-                { include:  [
-                    {
-                        model: Category,
-                        as: 'categories',
-                        attributes: ['id', 'name'],
-                    }
-                ]
-                })
+        if (id) {
+            const user = await User.findByPk(id, {
+                include: [{
+                    model: Category,
+                    as: 'categories',
+                    attributes: ['id', 'name'],
+                }]
+            })
             if (!user) {
                 res.status(404).json({ message: 'User not found' })
             } else {
                 res.status(200).json(user)
             }
-        } else if(email) {
+        } else if (email) {
             const user = await User.findOne({ where: { email } })
             if (!user) {
                 res.status(404).json({ message: 'User not found' })
@@ -76,28 +75,28 @@ const createAdmin = async(req, res) => {
 }
 
 const getReviews = async(req, res) => {
-    try {
-        const { userId } = req.params
-        const user = await User.findByPk(userId, {
+    // try {
+    const { userId } = req.params
+    const user = await User.findByPk(userId, {
+        include: {
+            model: Review,
+            as: 'review',
+            attributes: ['rating', 'comment'],
             include: {
-                model: Review,
-                as: 'review',
-                attributes: ['rating', 'comment'],
-                include: {
-                    model: Movie,
-                    as: 'movie',
-                    attributes: ['title', 'id']
-                }
+                model: Movie,
+                as: 'movie',
+                attributes: ['title', 'id']
             }
-        })
-        if (!user) {
-            res.status(404).json({ message: 'User not found' })
-        } else {
-            res.status(200).json(user)
         }
-    } catch (err) {
-        next(err)
+    })
+    if (!user) {
+        res.status(404).json({ message: 'User not found' })
+    } else {
+        res.status(200).json(user)
     }
+    // } catch (err) {
+    //     next(err)
+    // }
 }
 
 const searchUser = async(req, res) => {
