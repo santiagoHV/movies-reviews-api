@@ -137,21 +137,22 @@ const getAllMovies = async(req, res, next) => {
 
 const getUnpublishedMovies = async(req, res, next) => {
     try {
-        const movies = await Movie.findAll({ 
+        const movies = await Movie.findAll({
             where: [
                 { published: false },
                 { status: 'pending' }
             ],
             include: [{
-                model: User,
-                as: 'creator',
-                attributes: ['name', 'lastname', 'email']
-            },
-            {
-                model: Category,
-                as: 'categories',
-                attributes: ['name', 'description'],
-            }]
+                    model: User,
+                    as: 'creator',
+                    attributes: ['name', 'lastname', 'email']
+                },
+                {
+                    model: Category,
+                    as: 'categories',
+                    attributes: ['name', 'description'],
+                }
+            ]
         })
         res.status(200).json(movies)
     } catch (error) {
@@ -164,33 +165,33 @@ const getMovieById = async(req, res, next) => {
     try {
         const { id } = req.params
         const movie = await Movie.findByPk(id, {
-                attributes: ['id', 'title', 'director', 'description', 'year', 'image', 'clasification', 'published'],
-                include: [{
+            attributes: ['id', 'title', 'director', 'description', 'year', 'image', 'clasification', 'published'],
+            include: [{
+                    model: User,
+                    as: 'creator',
+                    attributes: ['name', 'lastname', 'email']
+                },
+                {
+                    model: Review,
+                    as: 'reviews',
+                    attributes: ['id', 'comment', 'rating', 'createdAt'],
+                    include: [{
                         model: User,
-                        as: 'creator',
-                        attributes: ['name', 'lastname', 'email']
-                    },
-                    {
-                        model: Review,
-                        as: 'reviews',
-                        attributes: ['id', 'comment', 'rating', 'createdAt'],
-                        include: [{
-                            model: User,
-                            as: 'user',
-                            attributes: ['name', 'lastname', 'email', 'id']
-                        }]
-                    },
-                    {
-                        model: Category,
-                        as: 'categories',
-                        attributes: ['name', 'description'],
-                    }
-                ],
-            })
+                        as: 'user',
+                        attributes: ['name', 'lastname', 'email', 'id']
+                    }]
+                },
+                {
+                    model: Category,
+                    as: 'categories',
+                    attributes: ['name', 'description'],
+                }
+            ],
+        })
 
-            const rating = await movie.calculateRating()
+        const rating = await movie.calculateRating()
 
-            const jsonMovie = {...movie.dataValues, rating }
+        const jsonMovie = {...movie.dataValues, rating }
 
         if (!movie) {
             res.status(404).json({ message: 'Movie not found' })
